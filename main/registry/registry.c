@@ -12,11 +12,12 @@
 #include <registry/registry.h>
 
 #define CLASS class->Registry
+#define ENV class->env
 
 typedef struct RegistryClass {
 	JNIEnv env;
 	jclass Registry;
-	jmethodID Collection;
+	// jmethodID getRegistries;
 	jmethodID freeze;
 	jmethodID getDumpLogger;
 	jmethodID setDumpLogger;
@@ -54,9 +55,10 @@ typedef struct RegistryClass {
 	jmethodID publish;
 } RegistryClass;
 
-RegistryClass registry(JNIEnv *env) {
+RegistryClass registry(RegistryClass registryclass) {
 	RegistryClass registryclass;
 	RegistryClass* class = &registryclass;
-	class->env = env;
-	class->Registry = (*env)->FindClass(env, "Registry");
-	class->
+	class->env = *env;
+	class->Registry = ENV->FindClass(ENV, "Registry");
+	// class->getRegistries = ENV->GetStaticMethodID(ENV, CLASS, "getRegistries", "(
+	class->freeze = ENV->GetStaticMethodID
